@@ -43,7 +43,30 @@ mymult2 n m =
             | length l == n = l
             | otherwise = makelist n m (m : l)
     in foldl (+) 0 (makelist n m [])
-        
+
+-- #3.9
+-- bad solution
+mymap :: (a -> b) -> [a] -> [b]
+mymap f [] = []
+mymap f list = 
+    let g h [] m = reverse m
+        g h (x:xs) m = g h xs ((h x) : m)
+    in  g f list []
+
+-- still bad
+mymap2 :: (a -> b) -> [a] -> [b]
+mymap2 f [] = []
+mymap2 f list =
+    let g h l m i
+            | length l == i = reverse m
+            | otherwise = g h l ((h (l !! i)) : m) (i+1)
+    in  g f list [] 0
+
+-- list comprehension
+mymap3 :: (a -> b) -> [a] -> [b]
+mymap3 f [] = []
+mymap3 f l = [ f x | x <- l ]
+
 main = do
     putStrLn (show (maptobool "Hello"))
     putStrLn (show (nooflower "Hello"))
@@ -53,3 +76,6 @@ main = do
     putStrLn (show (myfib 9))
     putStrLn (show (mymult 7 6))
     putStrLn (show (mymult2 7 (-6)))
+    putStrLn (show (mymap toUpper "Hello"))
+    putStrLn (show (mymap2 toUpper "Hello"))
+    putStrLn (show (mymap3 toUpper "Hello"))
