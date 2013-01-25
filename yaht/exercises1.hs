@@ -1,30 +1,37 @@
 -- exercises from YAHT
 
 import Data.Char
+import Data.Maybe
 
 -- #3.3
+
 maptobool :: [Char] -> [Bool]
 maptobool list = map isLower list
 
 -- #3.4
+
 nooflower :: [Char] -> Int
 nooflower list = length (filter isLower list)
 
 -- #3.5
+
 maxinlist :: [Int] -> Int
 maxinlist list = foldl (max) 0 list
 
 -- #3.6
+
 fvalpair :: [(Int,Char)] -> Int
 fvalpair list = fst (list !! 1)
 
 -- #3.7
+
 myfib :: Int -> Int
 myfib 1 = 1
 myfib 2 = 1
 myfib n = myfib (n-1) + myfib (n-2)
 
 -- #3.8 
+
 mymult :: Integer -> Integer -> Integer
 mymult 0 m = 0
 mymult n 0 = 0
@@ -44,7 +51,6 @@ mymult2 n m =
             | otherwise = makelist n m (m : l)
     in foldl (+) 0 (makelist n m [])
 
--- #3.9
 -- bad solution
 mymap :: (a -> b) -> [a] -> [b]
 mymap f [] = []
@@ -66,6 +72,9 @@ mymap2 f list =
 mymap3 :: (a -> b) -> [a] -> [b]
 mymap3 f [] = []
 mymap3 f l = [ f x | x <- l ]
+
+-- #3.10
+
 
 main = do
     putStrLn (show (maptobool "Hello"))
