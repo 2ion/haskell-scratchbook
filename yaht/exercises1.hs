@@ -74,7 +74,53 @@ mymap3 f [] = []
 mymap3 f l = [ f x | x <- l ]
 
 -- #3.10
+-- see file exercise3.10.hs
 
+-- #4.1
+-- 1. [Char]
+-- 2. Error: lists must be monotyped
+-- 3. (Int, Char) (Double, Char) or Num t => (t, Char), because the type
+-- of 5 has not been explicitly stated.
+-- 4. Int
+-- 5. Error, colliding types (or whatever?)
+
+-- #4.2
+-- 1. snd :: (a, b) -> b
+-- 2. head :: [a] -> a
+-- 3. null :: Bool
+-- 4. (head . tail) :: [a] -> a
+-- 5. (head . head) :: [[a]] -> a
+--
+-- #4.3
+-- 1. (\x -> [x]) :: a -> [a]
+-- 2. (\x y z -> (x, y:z:[])) :: a -> b -> b -> (a, [b])
+-- 3. (\x -> x + 5) :: Num a => a -> a
+-- 4. (\x -> "Hello World") :: String or (\x -> "Hello World") :: [Char]
+-- 5. (\x -> x 'a') :: (Char -> b) -> b
+-- 6. (\x -> x x) :: ? (isn't this kind of looping/infinite?)
+-- 7. (\x -> x + x) :: Num a => a -> a
+
+-- #4.4
+
+data Triple a b c = Triple a b c
+
+tripleFst :: (Triple a b c) -> a
+tripleSnd :: (Triple a b c) -> b
+tripleThr :: (Triple a b c) -> c
+
+tripleFst (Triple a b c) = a
+tripleSnd (Triple a b c) = b
+tripleThr (Triple a b c) = c
+
+-- #4.5
+
+data Quadruple a b  = Quadruple a a b b
+
+firstTwo :: (Quadruple a b) -> [a]
+firstTwo (Quadruple a b c d) = [a, b]
+
+lastTwo :: (Quadruple a b) -> [b]
+lastTwo (Quadruple a b c d) = [c, d]
 
 main = do
     putStrLn (show (maptobool "Hello"))
