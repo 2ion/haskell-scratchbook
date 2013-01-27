@@ -122,6 +122,34 @@ firstTwo (Quadruple a b c d) = [a, b]
 lastTwo :: (Quadruple a b) -> [b]
 lastTwo (Quadruple a b c d) = [c, d]
 
+-- #4.6
+
+data Tuple a b c d = One a
+    | Two a b
+    | Three a b c
+    | Four a b c d
+
+tuple1 (One     a) = Just a
+tuple1 (Two     a b) = Just a
+tuple1 (Three   a b c) = Just a
+tuple1 (Four    a b c d) = Just a
+
+tuple2 (One     a) = Nothing
+tuple2 (Two     a b) = Just b
+tuple2 (Three   a b c) = Just b
+tuple2 (Four    a b c d) = Just b
+
+-- and so on
+
+-- #4.7
+
+-- Either a b = Left a | Right b
+
+ttuple (One     a)          = Left  (Left   a)
+ttuple (Two     a b)        = Left  (Right  (a, b))
+ttuple (Three   a b c)      = Right (Left   (a, b, c))
+ttuple (Four    a b c d)    = Right (Right  (a, b, c, d))
+
 main = do
     putStrLn (show (maptobool "Hello"))
     putStrLn (show (nooflower "Hello"))
