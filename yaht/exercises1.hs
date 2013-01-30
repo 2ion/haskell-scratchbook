@@ -150,6 +150,31 @@ ttuple (Two     a b)        = Left  (Right  (a, b))
 ttuple (Three   a b c)      = Right (Left   (a, b, c))
 ttuple (Four    a b c d)    = Right (Right  (a, b, c, d))
 
+-- #4.8 head, tail, foldl and foldr implementations using the list type
+
+data List a = Nil
+    | Cons a (List a)
+
+listLength Nil = 0
+listLength (Cons x xs) = 1 + listLength xs
+
+listHead Nil = Nothing
+listHead (Cons x xs) = Just x
+
+listTail Nil = Nothing
+listTail (Cons x xs) = Just xs
+
+-- simulation foldl
+-- listFoldl (+) 0 [1,2,3,4] -> listFoldl (+) ((+) 1 0) [2,3,4]
+--                           -> listFoldl (+) (1) [2,3,4]
+--                           -> listFoldl (+) ((+) 2 1) [3,4]
+--                           -> listFoldl (+) (3) [4]
+--                           -> listFoldl (+) ((+) 4 3) []
+--                           -> listFoldl (+) (7) []
+--                           -> 7
+listFoldl op ival Nil = ival
+listFoldl op ival (Cons x xs) = listFoldl op (op x ival) xs
+
 main = do
     putStrLn (show (maptobool "Hello"))
     putStrLn (show (nooflower "Hello"))
