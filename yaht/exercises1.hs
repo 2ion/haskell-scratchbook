@@ -143,7 +143,7 @@ tuple2 (Four    a b c d) = Just b
 
 -- #4.7
 
--- Either a b = Left a | Right b
+-- data Either a b = Left a | Right b
 
 ttuple (One     a)          = Left  (Left   a)
 ttuple (Two     a b)        = Left  (Right  (a, b))
@@ -174,6 +174,28 @@ listTail (Cons x xs) = Just xs
 --                           -> 7
 listFoldl op ival Nil = ival
 listFoldl op ival (Cons x xs) = listFoldl op (op x ival) xs
+
+-- FIXME: I can't figure out listFoldr!
+
+data BinaryTree t = Leaf t
+    | Branch (BinaryTree t) t (BinaryTree t)
+
+treeSize (Leaf x) = 1
+treeSize (Branch left x right) = 1 + treeSize left + treeSize right
+
+-- #4.9 collect all elements of a BinaryTree in a Haskell list
+
+collectTree (Leaf x) = [x]
+collectTree (Branch left x right)= [x] ++ (collectTree left) ++ (collectTree right)
+
+-- #4.10a fold function for a BinaryTree
+
+foldTree op ival (Leaf x) = op x ival
+foldTree op ival (Branch left x right) = foldTree op (op x (foldTree op ival left)) right
+
+-- #4.11b rewrite collectTree in terms of foldTree
+
+collectTree2 tree = foldTree (:) [] tree
 
 main = do
     putStrLn (show (maptobool "Hello"))
