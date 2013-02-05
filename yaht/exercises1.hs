@@ -2,6 +2,7 @@
 
 import Data.Char
 import Data.Maybe
+import Colors
 
 -- #3.3
 
@@ -200,31 +201,31 @@ collectTree2 tree = foldTree (:) [] tree
 -- #colors
 -- FIXME
 
-data Color = Rgb Int Int Int
-    | Rgba Int Int Int Int
-    | Hsv Int Int Int
-
-colorRGB :: Color -> Color
-colorRGB (Rgb x y z) = Rgb x y z
-colorRGB (Rgba x y z a) = Rgb x y z
-colorRGB (Hsv h s v) = 
-    let c' v s = v * s
-        m' v c = v - c
-        h' 0 = 0/1
-        h' h = h/60
-        x' c hs = c * (1 - abs ((hs `mod` 2) - 1))
-        at (x, y, z) (u, v, w) = (abs (x + u), abs (y + v), abs (z + w))
-        mt x = (x, x, x)
-        rgbt' (x, y, z) = Rgb x y z
-        rgb' hs xs c 
-            | hs == 0 = (0, 0, 0)
-            | hs >= 0 && hs < 1 = (c, xs, 0)
-            | hs >= 1 && hs < 2 = (xs, c, 0)
-            | hs >= 2 && hs < 3 = (0, c, xs)
-            | hs >= 3 && hs < 4 = (0, xs, c)
-            | hs >= 4 && hs < 5 = (xs, 0, c)
-            | hs >= 4 && hs < 6 = (c, 0, xs)
-    in  rgbt' (at (rgb' (h' h) (x' (c' v s) (h' h)) (c' v s)) (mt (m' v (c' v s))))
+-- data Color = Rgb Int Int Int
+--     | Rgba Int Int Int Int
+--     | Hsv Int Int Int
+-- 
+-- colorRGB :: Color -> Color
+-- colorRGB (Rgb x y z) = Rgb x y z
+-- colorRGB (Rgba x y z a) = Rgb x y z
+-- colorRGB (Hsv h s v) = 
+--     let c' v s = v * s
+--         m' v c = v - c
+--         h' 0 = 0/1
+--         h' h = h/60
+--         x' c hs = c * (1 - abs ((hs `mod` 2) - 1))
+--         at (x, y, z) (u, v, w) = (abs (x + u), abs (y + v), abs (z + w))
+--         mt x = (x, x, x)
+--         rgbt' (x, y, z) = Rgb x y z
+--         rgb' hs xs c 
+--             | hs == 0 = (0, 0, 0)
+--             | hs >= 0 && hs < 1 = (c, xs, 0)
+--             | hs >= 1 && hs < 2 = (xs, c, 0)
+--             | hs >= 2 && hs < 3 = (0, c, xs)
+--             | hs >= 3 && hs < 4 = (0, xs, c)
+--             | hs >= 4 && hs < 5 = (xs, 0, c)
+--             | hs >= 4 && hs < 6 = (c, 0, xs)
+--     in  rgbt' (at (rgb' (h' h) (x' (c' v s) (h' h)) (c' v s)) (mt (m' v (c' v s))))
 
 main = do
     putStrLn (show (maptobool "Hello"))
@@ -238,3 +239,4 @@ main = do
     putStrLn (show (mymap toUpper "Hello"))
     putStrLn (show (mymap2 toUpper "Hello"))
     putStrLn (show (mymap3 toUpper "Hello"))
+    putStrLn (show (colorList (rgb (Hsv 0 0 100))))
