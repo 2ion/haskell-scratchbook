@@ -2,7 +2,7 @@
 
 import Data.Char
 import Data.Maybe
-import Colors
+--import Colors
 
 -- #3.3
 
@@ -227,6 +227,32 @@ collectTree2 tree = foldTree (:) [] tree
 --             | hs >= 4 && hs < 6 = (c, 0, xs)
 --     in  rgbt' (at (rgb' (h' h) (x' (c' v s) (h' h)) (c' v s)) (mt (m' v (c' v s))))
 
+-- eta reduction
+-- uncurry :: (a -> b -> c) -> (a,b) -> c
+-- curry :: ((a,b) -> c) -> (a -> b -> c
+-- flip :: (a -> b -> c) -> (b -> a -> c)
+
+sumsOfTuples = map (uncurry (+))
+
+-- #7.1 convert all the functions into point-free style
+
+func1 x l = map (\y -> y*x) l
+func1pf x = map (*x) 
+
+func2 f g l = filter f (map g l)
+func2pf f g = (filter f . map g) 
+
+func3 f l = l ++ map f l
+func3pf f = (show . map f)
+
+func4 l =   map (\y -> y+2)
+                (filter (\z -> z `elem` [1..10])
+                    (5:l))
+func4pf = (map (+2) . filter (`elem` [1..10]))
+
+func5 f l = foldr (\x y -> f (y,x)) 0 l
+func5pf f = foldr (uncurry $ flip $ f) 0
+
 main = do
     putStrLn (show (maptobool "Hello"))
     putStrLn (show (nooflower "Hello"))
@@ -239,4 +265,4 @@ main = do
     putStrLn (show (mymap toUpper "Hello"))
     putStrLn (show (mymap2 toUpper "Hello"))
     putStrLn (show (mymap3 toUpper "Hello"))
-    putStrLn (show (colorList (rgb (Hsv 0 0 100))))
+    putStrLn $ show $ sumsOfTuples [(1,2),(3,4)]
